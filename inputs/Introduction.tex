@@ -1,0 +1,38 @@
+\chapter{Introduction}
+This is the introduction. 
+\newpage
+\section{2番目}
+This is the second page of the introductory chapter. 
+\newpage
+\section{Third page}
+This is the third page of the introductory chapter.
+
+You can use \texttt{$\backslash$putFigure} command to put a figure into the document. 
+The formula is following: 
+\begin{equation}
+\backslash\texttt{putFigure}[\texttt{option}]\{\texttt{file location}\}
+\{\texttt{caption}\}\{\texttt{label name}\}
+\end{equation}
+where in the \texttt{option} we can set the width of the figure with the unit of \texttt{$\backslash$textwidth}. 
+The example shows in \figurename~\ref{fig:higgs}. 
+\putFigure[.5]{fig_009}{Higgs observation}{fig:higgs}
+
+The command \texttt{$\backslash$putTable} is also available. 
+But it is less useful than the \texttt{$\backslash$putFigure} 
+since there are a lot of parameters for definition a table.
+Here, an example is shown. 
+If you define a table with 2 columns and 2 rows, the command you should 
+type is following: 
+\begin{equation}
+\backslash\texttt{putTable}\{\texttt{cc}\}
+\{\texttt{1 \& 2}\backslash\backslash\ \backslash\texttt{midrule 3 \& 4}\}
+\{\texttt{Example of the table}\}\{\texttt{tab:exmpl}\}
+\end{equation}
+then we get \tablename~\ref{tab:exmpl}. 
+\putTable{cc}{1&2\\ \midrule 3&4}{Example of the table}{tab:exmpl}
+
+The format of Fig.~\ref{fig:higgs} is a bit old (\texttt{.eps}... ). Of course, the command works for \texttt{PDF} format like Fig.~\ref{fig:recotime}. 
+\texttt{JPEG} format can also be handled (see Fig.~\ref{fig:pork}). 
+\putFigure[.8]{reco_time}{PDF format example}{fig:recotime}
+\putFigure[.5]{pork.jpeg}{JPEG format example}{fig:pork}
+

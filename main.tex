@@ -1,0 +1,46 @@
+\documentclass[a4paper,11pt,twoside,openright]{Thesis}
+
+\usepackage[japanese, master]{ThesisTemplate} 
+%% オプション"japanese"を消すと英語化されます。
+%% 論文種類は、phd, master, bachelor の3種類です。(デフォルトはphd)
+%% オプション "blacklink"を追加するとリンクが全て黒色になります
+
+\setcounter{secnumdepth}{3} % show subsubsection numbers
+
+\putTitle{Title of your thesis} % タイトル
+\putAuthor{The Author}{Department of Physics, A University} % 自分の名前、所属機関名
+\date{\today} % 提出日を記入するのが望ましい
+
+\addbibresource{bib/sample.bib} % bibファイルの指定
+
+\begin{document}
+\maketitle
+\frontmatter
+\putAbstract{inputs/abst} % 概要
+\tableofcontents % 目次
+
+\mainmatter % ここから本文
+\input{inputs/Introduction}
+\input{inputs/Physics}
+\input{inputs/Detector}
+\input{inputs/ObjectDefinition}
+\input{inputs/SignalOptimisation}
+\input{inputs/BGestimation}
+\input{inputs/Systematics}
+\input{inputs/Results}
+\input{inputs/Conclusion}
+
+\chapter*{\AckName \markboth{\AckName}{\AckName}} % 謝辞
+\input{inputs/Acknowledgement}
+
+%\input{inputs/bibliography}
+\printbibliography
+
+\appendix % 以下、付録
+% \input{inputs/Appendix}
+
+\listoffigures % 図目次
+\listoftables % 表目次
+
+\end{document}
+
