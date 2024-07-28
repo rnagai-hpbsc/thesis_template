@@ -14,8 +14,10 @@ The formula is following:
 \{\texttt{caption}\}\{\texttt{label name}\}
 \end{equation}
 where in the \texttt{option} we can set the width of the figure with the unit of \texttt{$\backslash$textwidth}. 
-The example shows in \figurename~\ref{fig:higgs}. 
-\putFigure[.5]{fig_009}{Higgs observation}{fig:higgs}
+The example shows in \figurename~\ref{fig:recotime}. 
+\putFigure[.8]{reco_time.pdf}{PDF format example}{fig:recotime}
+The \texttt{JPEG} format can also be handled (see Fig.~\ref{fig:pork}). 
+\putFigure[.5]{pork.jpeg}{JPEG format example}{fig:pork}
 
 The command \texttt{$\backslash$putTable} is also available. 
 But it is less useful than the \texttt{$\backslash$putFigure} 
@@ -31,8 +33,4 @@ type is following:
 then we get \tablename~\ref{tab:exmpl}. 
 \putTable{cc}{1&2\\ \midrule 3&4}{Example of the table}{tab:exmpl}
 
-The format of Fig.~\ref{fig:higgs} is a bit old (\texttt{.eps}... ). Of course, the command works for \texttt{PDF} format like Fig.~\ref{fig:recotime}. 
-\texttt{JPEG} format can also be handled (see Fig.~\ref{fig:pork}). 
-\putFigure[.8]{reco_time}{PDF format example}{fig:recotime}
-\putFigure[.5]{pork.jpeg}{JPEG format example}{fig:pork}
 

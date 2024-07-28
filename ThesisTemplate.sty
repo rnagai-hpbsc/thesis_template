@@ -17,6 +17,11 @@
 \PassOptionsToPackage{urlcolor=magenta}{hyperref}
 \PassOptionsToPackage{citecolor=red}{hyperref}
 
+%% title re-definition
+\newcommand\leftmarkwthshape{\slshape\leftmark}
+\newcommand\rightmarkwthshape{\slshape\rightmark}
+
+
 %% definition of words
 \newcommand{\postthesisname}{ Thesis}
 \newcommand{\abstname}{\textsc{Abstract}}
@@ -63,17 +68,14 @@
 }
 
 \newcommand{\putFigure}[4][.8]{
-  {
-  \begin{figure}[htbp]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=#1\textwidth]{figures/#2}
     \caption{#3 \label{#4}}
-  \end{figure}
-  }
+\end{figure}
 }
 
 \newcommand{\putTable}[4]{
-  {
   \begin{table}[htbp]
     \centering
     \caption{#3 \label{#4}}
@@ -83,7 +85,6 @@
       \bottomrule
     \end{tabular}
   \end{table} 
-  }
 }
 
 \newcommand{\AckName}{Acknowledgment}
@@ -134,6 +135,11 @@
 \DeclareOption{bachelor}{
   \renewcommand\thesisname{\prebachelorthesisformat\postthesisname}
 }
+
+\def\newnumberline#1{\numberline{#1}}
+\newcommand\tocchaptername{\thechapter}
+\newcommand{\postchaptername}{}
+\newcommand\@chapaft{\postchaptername}
 
 \DeclareOption{japanese}{
   \renewcommand\postthesisname{論文}
@@ -211,3 +217,104 @@ bookmarksnumbered=true,bookmarks=true]{hyperref}
 \DeclareFieldFormat*{title}{\textit{``#1''}}
 \DeclareFieldFormat*{citetitle}{\textit{``#1''}}
 
+\if@twoside
+  \def\ps@headings{%
+      \let\@oddfoot\@empty\let\@evenfoot\@empty
+      \def\@evenhead{\thepage\hfil\leftmarkwthshape}%\slshape\leftmark}%
+      \def\@oddhead{\rightmarkwthshape\hfil\thepage}%{\slshape\rightmark}\hfil\thepage}%
+      \let\@mkboth\markboth
+    \def\chaptermark##1{%
+      \markboth {\MakeUppercase{%
+        \ifnum \c@secnumdepth >\m@ne
+          \if@mainmatter
+            \@chapapp\ \thechapter\ \@chapaft \ \ %
+          \fi
+        \fi
+        ##1}}{}}%
+    \def\sectionmark##1{%
+      \markright {\MakeUppercase{%
+        \ifnum \c@secnumdepth >\z@
+          \thesection \ \ %
+        \fi
+        ##1}}}}
+\else
+  \def\ps@headings{%
+    \let\@oddfoot\@empty
+    \def\@oddhead{\rightmarkwthshape\hfil\thepage}%{\slshape\rightmark}\hfil\thepage}%
+    \let\@mkboth\markboth
+    \def\chaptermark##1{%
+      \markright {\MakeUppercase{%
+        \ifnum \c@secnumdepth >\m@ne
+          \if@mainmatter
+            \@chapapp\ \thechapter \ \@chapaft \ \   %
+          \fi
+        \fi
+        ##1}}}}
+\fi
+\def\ps@myheadings{%
+    \let\@oddfoot\@empty\let\@evenfoot\@empty
+    \def\@evenhead{\thepage\hfil\leftmarkwthshape}%\slshape\leftmark}%
+    \def\@oddhead{\rightmarkwthshape\hfil\thepage}%{\slshape\rightmark}\hfil\thepage}%
+    \let\@mkboth\@gobbletwo
+    \let\chaptermark\@gobble
+    \let\sectionmark\@gobble
+    }
+
+%% Chapter re-definition
+\renewcommand\chapter{\if@openright\cleardoublepage\else\clearpage\fi
+                    %\thispagestyle{plain}%
+                    \global\@topnum\z@
+                    \@afterindentfalse
+                    \secdef\@chapter\@schapter}
+\def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+                       \if@mainmatter
+                         \refstepcounter{chapter}%
+                         \typeout{\@chapapp\space\thechapter\space\@chapaft.}%
+                         \addcontentsline{toc}{chapter}%
+                                   {\protect\newnumberline{\tocchaptername}#1}%
+                       \else
+                         \addcontentsline{toc}{chapter}{#1}%
+                       \fi
+                    \else
+                      \addcontentsline{toc}{chapter}{#1}%
+                    \fi
+                    \chaptermark{#1}%
+                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+                    \if@twocolumn
+                      \@topnewpage[\@makechapterhead{#2}]%
+                    \else
+                      \@makechapterhead{#2}%
+                      \@afterheading
+                    \fi}
+\def\@makechapterhead#1{%
+  \vspace*{50\p@}%
+  {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+      \if@mainmatter
+        \huge\bfseries \@chapapp\space \thechapter \space \@chapaft
+        \par\nobreak
+        \vskip 20\p@
+      \fi
+    \fi
+    \interlinepenalty\@M
+    \Huge \bfseries #1\par\nobreak
+    \vskip 40\p@
+  }}
+
+\def\@schapter#1{\if@twocolumn
+                   \@topnewpage[\@makeschapterhead{#1}]%
+                 \else
+                   \@makeschapterhead{#1}%
+                   \@afterheading
+                 \fi}
+\def\@makeschapterhead#1{%
+  \vspace*{50\p@}%
+  {\parindent \z@ \raggedright
+    \normalfont
+    \interlinepenalty\@M
+    \Huge \bfseries  #1\par\nobreak
+    \vskip 40\p@
+  }}
+
+\pagestyle{headings}
